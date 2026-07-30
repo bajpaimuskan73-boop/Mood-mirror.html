@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Mirror ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fdf6f0;
+      transition: background 0.8s ease;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .moods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 40px;
+      max-width: 700px;
+    }
+
+    .mood-btn {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mood-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .mood-btn.active {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 3px white, 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Button colours */
+    .happy { background: #FFE566; color: #5c4a00; }
+    .sad { background: #A2D2FF; color: #1a3a5c; }
+    .tired { background: #CDB4DB; color: #3d2a4a; }
+    .confident { background: #FF8FAB; color: #5c1a30; }
+    .anxious { background: #B5EAD7; color: #1a4a3a; }
+    .selflove { background: #FFC8DD; color: #5c1a3a; }
+
+    .content {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      transition: all 0.5s ease;
+    }
+
+    .quote-box {
+      margin-bottom: 28px;
+    }
+
+    .quote {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .author {
+      font-size: 0.95rem;
+      color: #777;
+      font-style: italic;
+    }
+
+    .playlist-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #444;
+    }
+
+    iframe {
+      border-radius: 16px;
+      width: 100%;
+      height: 152px;
+      border: none;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 1.9rem; }
+      .mood-btn { padding: 12px 16px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mood Mirror 🪞</h1>
+  <p class="subtitle">Select your mood & let the vibe match you ✨</p>
+
+  <div class="moods">
+    <button class="mood-btn happy" onclick="setMood('happy')">😊 Happy</button>
+    <button class="mood-btn sad" onclick="setMood('sad')">😢 Sad</button>
+    <button class="mood-btn tired" onclick="setMood('tired')">😴 Tired</button>
+    <button class="mood-btn confident" onclick="setMood('confident')">💪 Confident</button>
+    <button class="mood-btn anxious" onclick="setMood('anxious')">😰 Anxious</button>
+    <button class="mood-btn selflove" onclick="setMood('selflove')">💖 Self Love</button>
+  </div>
+
+  <div class="content" id="content" style="display: none;">
+    <div class="quote-box">
+      <p class="quote" id="quote"></p>
+      <p class="author" id="author"></p>
+    </div>
+
+    <p class="playlist-title">🎵 Your Mood Playlist</p>
+    <iframe id="spotify" allow="encrypted-media"></iframe>
+  </div>
+
+  <p class="footer">Made with 💕 for your feelings</p>
+
+  <script>
+    const moods = {
+      happy: {
+        bg: "linear-gradient(135deg, #FFE566, #FFB347)",
+        quotes: [
+          { text: "Happiness is not something ready made. It comes from your own actions.", author: "Dalai Lama" },
+          { text: "The most important thing is to enjoy your life — to be happy — it's all that matters.", author: "Audrey Hepburn" },
+          { text: "Smile, because it confuses people. Smile, because it's cheaper than plastic surgery.", author: "Unknown" }
+        ],
+        playlist: "37i9dQZF1DX0UrRvztWcAU" // Wake Up Happy
+      },
+      sad: {
+        bg: "linear-gradient(135deg, #A2D2FF, #BDE0FE)",
+        quotes: [
+          { text: "It's okay to not be okay. Just don't give up.", author: "Unknown" },
+          { text: "Tears are words the heart can't express.", author: "Unknown" },
+          { text: "The pain you feel today is the strength you feel tomorrow.", author: "Unknown" }
+        ],
+        playlist: "37i9dQZF1DX7qK8ma5wgG1" // Sad Songs
+      },
+      tired: {
+        bg: "linear-gradient(135deg, #CDB4DB, #E2C2FF)",
+        quotes: [
+          { text: "Rest is not a waste of time. It's how you recharge for the next chapter.", author: "Unknown" },
+          { text: "Sometimes the most productive thing you can do is rest.", author: "Unknown" },
+          { text: "Take a deep breath. You've been carrying a lot.", author: "Unknown" }
+        ],
+        playlist: "37i9dQZF1DWYcDQ1hSjOpY" // Deep Sleep
+      },
+      confident: {
+        bg: "linear-gradient(135deg, #FF8FAB, #FFB3C6)",
+        quotes: [
+          { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+          { text: "You are braver than you believe, stronger than you seem, and smarter than you think.", author: "A.A. Milne" },
+          { text: "Confidence is silent. Insecurities are loud.", author: "Unknown" }
+        ],
+        playlist: "37i9dQZF1DX4fpCWaHOned" // Confidence Boost
+      },
+      anxious: {
+        bg: "linear-gradient(135deg, #B5EAD7, #C7F0DB)",
+        quotes: [
+          { text: "This too shall pass. Breathe. You're safe right now.", author: "Unknown" },
+          { text: "You don't have to control your thoughts. You just have to stop letting them control you.", author: "Dan Millman" },
+          { text: "Anxiety is temporary. Your strength is permanent.", author: "Unknown" }
+        ],
+        playlist: "37i9dQZF1DWXe9gFZP0gtP" // Stress Relief
+      },
+      selflove: {
+        bg: "linear-gradient(135deg, #FFC8DD, #FFAFCC)",
+        quotes: [
+          { text: "You are enough just as you are.", author: "Unknown" },
+          { text: "Be gentle with yourself. You're doing the best you can.", author: "Unknown" },
+          { text: "Self-love is the greatest romance of all.", author: "Unknown" }
+        ],
+        playlist: "60QGskd39QTzccupjYfGqE" // Self Love Anthems
+      }
+    };
+
+    function setMood(mood) {
+      const data = moods[mood];
+      const randomQuote = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+
+      // Background
+      document.body.style.background = data.bg;
+
+      // Quote
+      document.getElementById('quote').textContent = `"${randomQuote.text}"`;
+      document.getElementById('author').textContent = `— ${randomQuote.author}`;
+
+      // Spotify
+      document.getElementById('spotify').src = `https://open.spotify.com/embed/playlist/${data.playlist}?utm_source=generator&theme=0`;
+
+      // Show content
+      document.getElementById('content').style.display = 'block';
+
+      // Active button
+      document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
